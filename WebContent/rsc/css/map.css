@@ -1,0 +1,15 @@
+      #map {
+        height: 100%;
+      }
+      /* Optional: Makes the sample page fill the window. */
+      html, body {
+        height: 100%;
+        margin: 0;
+        padding: 0;
+      }
+      
+      img#avatar {
+    position: absolute;
+    right: 0px;
+    top: 0px;
+}
