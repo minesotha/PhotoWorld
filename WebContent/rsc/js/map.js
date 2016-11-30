@@ -1,3 +1,11 @@
+//upload plików
+
+
+
+
+
+
+//mapa
 var map; 
 var infowindow;
 
@@ -37,8 +45,6 @@ function signOut() {
     });
   }
 
-
-
 function displayCoordinates(pnt) {
 var lat = pnt.lat();
 lat = lat.toFixed(4);
@@ -58,3 +64,4 @@ function addMarker(pnt){
         infowindow.open(map, marker);
       });
 }
+
