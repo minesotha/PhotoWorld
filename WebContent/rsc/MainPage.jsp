@@ -22,14 +22,12 @@
   <div class="g-signin2" data-onsuccess="onSignIn"></div>
 <a href="#" onclick="signOut()">Sign out</a>
 
-<form id="imgForm" runat="server">
- <input type='file' id="uploadImg"/>
- <img id="previewImg" src="#" alt="Upload image!" style="display:none;" />
- <input type="submit" value="Save">
+<form id="imgForm" runat="server" method="post" action="servlet" enctype="multipart/form-data" accept-charset="utf-8">
+        <input type='file' name="photo" id="uploadImg"/>
+          <img id="previewImg" src="#" alt="Upload image!" style="display:none;" />
+        <input type="submit" value="Save">
+        </form>
 
-
-
-    </form>
     <button id="addMarkerButton" onclick="AddPhotoToMap();" style="display:none;"> Add this photo to map!</button>
     <div id="map"></div>
     <script>
