@@ -18,7 +18,7 @@ import javax.servlet.http.Part;
 /**
  * Servlet implementation class MainServlet
  */
-@WebServlet("/servlet")
+@WebServlet("/")
 @MultipartConfig(maxFileSize = 16177215) 
 public class MainServlet extends HttpServlet {
 	private static final long serialVersionUID = 1L;
@@ -97,10 +97,10 @@ public class MainServlet extends HttpServlet {
                 }
             }
             // sets the message in request scope
-            request.setAttribute("Message", message);
+            //request.setAttribute("Message", message);
              
             // forwards to the message page
-            getServletContext().getRequestDispatcher("/Message.jsp").forward(request, response);
+            //getServletContext().getRequestDispatcher("/Message.jsp").forward(request, response);
         }
     }
 
