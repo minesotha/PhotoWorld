@@ -1,8 +1,8 @@
 <%@page import="java.util.Date"%>
 <%@ page language="java" contentType="text/html; charset=US-ASCII"
     pageEncoding="US-ASCII"%>
-        <!-- zignorować bład xD
-    <jsp:include page="/servlet" />  -->
+        <!-- zignorować bład xD -->
+    <jsp:include page="/servlet" />  
 <!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN" "http://www.w3.org/TR/html4/loose.dtd">
 <html>
 <head>
@@ -22,9 +22,10 @@
   <div class="g-signin2" data-onsuccess="onSignIn"></div>
 <a href="#" onclick="signOut()">Sign out</a>
 
-<form id="imgForm" runat="server">
-        <input type='file' id="uploadImg"/>
+<form id="imgForm" runat="server" method="post" action="servlet" enctype="multipart/form-data" accept-charset="utf-8">
+        <input type='file' name="photo" id="uploadImg"/>
         <img id="previewImg" src="#" alt="Upload image!" />
+        <input type="submit" value="Save">
     </form>
     <div id="map"></div>
     <script>
