@@ -3,8 +3,9 @@ function readURL(input) {
         var reader = new FileReader();
         reader.onload = function (e) {
             $('#previewImg').attr('src', e.target.result);
-        }
-        
+            $("#addMarkerButton").show();
+            $('#previewImg').show();
+        }        
         reader.readAsDataURL(input.files[0]);
     }
 }
@@ -12,3 +13,6 @@ function readURL(input) {
 $("#uploadImg").change(function(){
     readURL(this);
 });
+
+
+

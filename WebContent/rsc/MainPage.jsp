@@ -24,8 +24,9 @@
 
 <form id="imgForm" runat="server">
         <input type='file' id="uploadImg"/>
-        <img id="previewImg" src="#" alt="Upload image!" />
+        <img id="previewImg" src="#" alt="Upload image!" style="display:none;" />
     </form>
+    <button id="addMarkerButton" onclick="AddPhotoToMap();" style="display:none;"> Add this photo to map!</button>
     <div id="map"></div>
     <script>
     $("#uploadImg").change(function(){
