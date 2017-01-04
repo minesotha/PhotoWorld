@@ -25,6 +25,10 @@
           <img id="previewImg" src="#" alt="Upload image!" style="display:none;" />
         <input type="submit" value="Save">
         </form>
+        
+<c:forEach items="${imagenames}" var="imagename">
+    <img src="${pageContext.request.contextPath}/images/${imagename}">
+</c:forEach>
 
     <button id="addMarkerButton" onclick="AddPhotoToMap();" style="display:none;"> Add this photo to map!</button>
     <div id="map"></div>

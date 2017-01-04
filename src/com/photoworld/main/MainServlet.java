@@ -97,10 +97,10 @@ public class MainServlet extends HttpServlet {
                 }
             }
             // sets the message in request scope
-            //request.setAttribute("Message", message);
+            request.setAttribute("Message", message);
              
             // forwards to the message page
-            //getServletContext().getRequestDispatcher("/Message.jsp").forward(request, response);
+           getServletContext().getRequestDispatcher("/").forward(request, response);
         }
     }
 
