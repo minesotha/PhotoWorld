@@ -26,15 +26,14 @@ public class ImagesServlet extends HttpServlet {
     private String dbURL = "jdbc:mysql://localhost/photoworld";
     private String dbUser = "root";
     private String dbPass = "roland";
-    // content=blob, name=varchar(255) UNIQUE.
-    private static final String SQL_FIND = "SELECT photo FROM data WHERE username = ?";
+    private static final String SQL_FIND = "SELECT photo, longitude, latitude FROM data WHERE username = ?";
 
     @Resource(name="jdbc:mysql://localhost/photoworld") // For Tomcat, define as <Resource> in context.xml and declare as <resource-ref> in web.xml.
     private DataSource dataSource;
 
     @Override
     protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
-        String imageName = "helen";//test //request.getPathInfo().substring(1); // Returns "foo.png".
+        String username =request.getPathInfo().substring(1); // Returns "foo.png".
         
         try {
             // connects to the database
@@ -43,19 +42,25 @@ public class ImagesServlet extends HttpServlet {
  
 
 PreparedStatement statement = (PreparedStatement) connection.prepareStatement(SQL_FIND);
-            statement.setString(1, imageName);
+            statement.setString(1, username);
 
             try (ResultSet resultSet = statement.executeQuery()) {
-                if (resultSet.next()) {
-                    byte[] content = resultSet.getBytes("photo");
-                    response.setContentType(getServletContext().getMimeType(imageName));
-                    response.setContentLength(content.length);
-                    response.getOutputStream().write(content);
-                } else {
-                    response.sendError(HttpServletResponse.SC_NOT_FOUND); // 404.
-                }
+            	if(resultSet.wasNull()){                	
+            		response.sendError(HttpServletResponse.SC_NOT_FOUND); // 404.
+            	}
+            	else{
+            		int count=0;
+            		while (resultSet.next()) {
+	                    byte[] content = resultSet.getBytes("photo");
+	                    response.setContentType(getServletContext().getMimeType(username));
+	                    response.setContentLength(content.length);
+	                    response.getOutputStream().write(content);
+	                    count++;
+	                }
+            	}
             }
-        } catch (SQLException e) {
+        } 
+        catch (SQLException e) {
             throw new ServletException("Something failed at SQL/DB level.", e);
         }
     }

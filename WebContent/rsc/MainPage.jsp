@@ -1,3 +1,4 @@
+<%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 <%@page import="java.util.Date"%>
 <%@ page language="java" contentType="text/html; charset=US-ASCII"
     pageEncoding="US-ASCII"%>  
@@ -26,10 +27,9 @@
         <input type="submit" value="Save">
         </form>
         
-<c:forEach items="${imagenames}" var="imagename">
-    <img src="${pageContext.request.contextPath}/images/${imagename}">
+	<c:forEach items="helen" var="photo">
+    <img src="${pageContext.request.contextPath}/images/${photo}">
 </c:forEach>
-
     <button id="addMarkerButton" onclick="AddPhotoToMap();" style="display:none;"> Add this photo to map!</button>
     <div id="map"></div>
     <script>
