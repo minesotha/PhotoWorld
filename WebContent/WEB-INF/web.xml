@@ -13,8 +13,8 @@
     <url-pattern>/servlet</url-pattern>
   </servlet-mapping>
   <resource-ref>
-   <description>Primary database</description>
-  <res-ref-name>jdbc:mysql://localhost/photoworld</res-ref-name>
-  <res-type>javax.sql.DataSource</res-type>
-</resource-ref>
+    <description>Primary database</description>
+    <res-ref-name>jdbc:mysql://localhost/photoworld</res-ref-name>
+    <res-type>javax.sql.DataSource</res-type>
+  </resource-ref>
 </web-app>

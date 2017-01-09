@@ -16,24 +16,32 @@ import javax.sql.DataSource;
 import com.mysql.jdbc.Connection;
 import com.mysql.jdbc.PreparedStatement;
 
+import com.photoworld.main.Photo;
+import com.sun.xml.internal.bind.v2.schemagen.xmlschema.List;
+
 /**
  * Servlet implementation class ImagesServlet
  */
 @WebServlet("/images/*")
 public class ImagesServlet extends HttpServlet {
 	private static final long serialVersionUID = 1L;
-	 // database connection settings
-    private String dbURL = "jdbc:mysql://localhost/photoworld";
-    private String dbUser = "root";
-    private String dbPass = "roland";
-    private static final String SQL_FIND = "SELECT photo, longitude, latitude FROM data WHERE username = ?";
+	// database connection settings
+	private String dbURL = "jdbc:mysql://localhost/photoworld";
+	private String dbUser = "root";
+	private String dbPass = "roland";
+	private static final String SQL_FIND = "SELECT photo, longitude, latitude FROM data WHERE username = ?";
 
-    @Resource(name="jdbc:mysql://localhost/photoworld") // For Tomcat, define as <Resource> in context.xml and declare as <resource-ref> in web.xml.
-    private DataSource dataSource;
+	@Resource(name = "jdbc:mysql://localhost/photoworld") // For Tomcat, define
+															// as <Resource> in
+															// context.xml and
+															// declare as
+															// <resource-ref> in
+															// web.xml.
+	private DataSource dataSource;
 
-    @Override
+	@Override
     protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
-        String username =request.getPathInfo().substring(1); // Returns "foo.png".
+        String username =request.getPathInfo().substring(1); 
         
         try {
             // connects to the database
@@ -63,5 +71,14 @@ PreparedStatement statement = (PreparedStatement) connection.prepareStatement(SQ
         catch (SQLException e) {
             throw new ServletException("Something failed at SQL/DB level.", e);
         }
+    
+        
+//        try {
+//            List<Photo> photos = getPhotos.list(); // Obtain all products.
+//            request.setAttribute("photos", photos); // Store products in request scope.
+//            request.getRequestDispatcher("/WEB-INF/products.jsp").forward(request, response); // Forward to JSP page to display them in a HTML table.
+//        } catch (SQLException e) {
+//            throw new ServletException("Retrieving products failed!", e);
+//        }
     }
 }
