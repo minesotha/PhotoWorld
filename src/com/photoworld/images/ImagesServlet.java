@@ -1,28 +1,24 @@
-package com.photoworld.main;
+package com.photoworld.images;
 
 import java.io.IOException;
 import java.sql.DriverManager;
 import java.sql.ResultSet;
 import java.sql.SQLException;
+import java.util.ArrayList;
 
 import javax.annotation.Resource;
 import javax.servlet.ServletException;
-import javax.servlet.annotation.WebServlet;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import javax.sql.DataSource;
 
-import com.mysql.jdbc.Connection;
+import com.google.gson.Gson;
 import com.mysql.jdbc.PreparedStatement;
-
 import com.photoworld.main.Photo;
-import com.sun.xml.internal.bind.v2.schemagen.xmlschema.List;
-
 /**
  * Servlet implementation class ImagesServlet
  */
-@WebServlet("/images/*")
 public class ImagesServlet extends HttpServlet {
 	private static final long serialVersionUID = 1L;
 	// database connection settings
@@ -38,16 +34,20 @@ public class ImagesServlet extends HttpServlet {
 															// <resource-ref> in
 															// web.xml.
 	private DataSource dataSource;
-
+    public java.util.List<Photo> photoArray;
 	@Override
     protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
-        String username =request.getPathInfo().substring(1); 
+        String username =  request.getParameter("name");
+     
+        
+        photoArray=new ArrayList<Photo>();
         
         try {
             // connects to the database
             DriverManager.registerDriver(new com.mysql.jdbc.Driver());
            java.sql.Connection connection = DriverManager.getConnection(dbURL, dbUser, dbPass);
  
+
 
 PreparedStatement statement = (PreparedStatement) connection.prepareStatement(SQL_FIND);
             statement.setString(1, username);
@@ -59,12 +59,29 @@ PreparedStatement statement = (PreparedStatement) connection.prepareStatement(SQ
             	else{
             		int count=0;
             		while (resultSet.next()) {
-	                    byte[] content = resultSet.getBytes("photo");
-	                    response.setContentType(getServletContext().getMimeType(username));
-	                    response.setContentLength(content.length);
-	                    response.getOutputStream().write(content);
+            			Photo photo=new Photo();
+            			photo.setPath(resultSet.getString("photo"));
+            			photo.setLongitude(resultSet.getFloat("longitude"));
+	                     photo.setLatitude(resultSet.getFloat("latitude"));
+	                     photoArray.add(photo);
 	                    count++;
 	                }
+            		
+            		  String json = new Gson().toJson(photoArray);
+            		    //System.out.println(json);
+            		    
+            		  response.setContentType("application/json");
+            		   response.setCharacterEncoding("UTF-8"); // You want world domination, huh?
+            		    response.getWriter().write(json); 
+            	//	PrintWriter out = response.getWriter();
+            		// Assuming your json object is **jsonObject**, perform the following, it will return your json object  
+            	//	out.print(json);
+            	//	out.flush();
+            		
+            		
+            		//response.setContentType(getServletContext().getMimeType(username));
+            	//	response.setContentLength(photoArray.length);
+            	   // response.getOutputStream().write(photoArray);
             	}
             }
         } 

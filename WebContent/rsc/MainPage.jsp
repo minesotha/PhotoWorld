@@ -8,6 +8,7 @@
 <script src="rsc/js/jquery-3.1.1.min.js" type="text/javascript"></script>
 <script src="rsc/js/map.js" type="text/javascript"></script>
 <script src="rsc/js/upload.js" type="text/javascript"></script>
+<script src="rsc/js/loadMap.js" type="text/javascript"></script>
 <link rel="stylesheet" type="text/css" href="rsc/css/map.css"/>
 <meta http-equiv="Content-Type" content="text/html; charset=ISO-8859-1">
 <meta name="google-signin-client_id" content="264956101516-q0ur3n03vqjcr2re05roe2h06300u91e.apps.googleusercontent.com">
@@ -27,15 +28,23 @@
         <input type="submit" value="Save">
         </form>
         
-	<c:forEach items="helen" var="photo">
+<!-- 	
+<c:forEach items="helen" var="photo">
     <img src="${pageContext.request.contextPath}/images/${photo}">
 </c:forEach>
+ -->
     <button id="addMarkerButton" onclick="AddPhotoToMap();" style="display:none;"> Add this photo to map!</button>
     <div id="map"></div>
     <script>
     $("#uploadImg").change(function(){
     	readURL(this);
     });
+    
+    $(document).ready(function(){
+    	LoadMap();
+    });
+
+    
     </script>
     
   <script async defer  src="https://maps.googleapis.com/maps/api/js?key=AIzaSyDJAI8YZkwjydpg2u3WHsZR4G8CkYlZwbA&callback=initMap">

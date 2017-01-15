@@ -12,6 +12,14 @@
     <servlet-name>servlet</servlet-name>
     <url-pattern>/servlet</url-pattern>
   </servlet-mapping>
+  <servlet>
+    <servlet-name>images</servlet-name>
+    <servlet-class>com.photoworld.images.ImagesServlet</servlet-class>
+  </servlet>
+  <servlet-mapping>
+    <servlet-name>images</servlet-name>
+    <url-pattern>/images</url-pattern>
+  </servlet-mapping>
   <resource-ref>
     <description>Primary database</description>
     <res-ref-name>jdbc:mysql://localhost/photoworld</res-ref-name>
