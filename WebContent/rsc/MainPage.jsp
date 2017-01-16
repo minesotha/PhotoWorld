@@ -39,6 +39,7 @@
 		        <label>Choose place to addPhoto: </label>
 		          <input id="lon" type="text" name="lon" value="0">
 		            <input id="lat" type="text" name="lat" value="0">
+		              <input id="usernameForm" type="text" name="username" value="anon" style="display:none;">
 		          <img id="previewImg" src="#" alt="Upload image!" style="display:none;" />
 		        <input id="savePhotoButton" type="submit" value="Save" style="display:none;">
 	        </div>

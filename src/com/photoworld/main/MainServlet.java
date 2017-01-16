@@ -113,7 +113,9 @@ public class MainServlet extends HttpServlet {
 		            else if(name.equals("lat")){
 		               	lat = Float.parseFloat(value);
 		            }
-		            //you operations on paramters
+		            else if(name.equals("username")){
+		            	username = value;
+		            }
 		        }
 			}
 
