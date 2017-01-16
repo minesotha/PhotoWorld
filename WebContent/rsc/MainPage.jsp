@@ -2,8 +2,6 @@
 <%@page import="java.util.Date"%>
 <%@ page language="java" contentType="text/html; charset=US-ASCII"
     pageEncoding="US-ASCII"%>
-        <!-- zignorować bład xD -->
-    <jsp:include page="/servlet" />  
 <!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN" "http://www.w3.org/TR/html4/loose.dtd">
 <html>
 <head>
@@ -19,23 +17,42 @@
 </head>
 <body>
   <h3>Photo World Demo</h3> 
-  <img id="avatar"></img>
-  <label id="coords"></label>
-  <div class="g-signin2" data-onsuccess="onSignIn"></div>
-<a href="#" onclick="signOut()">Sign out</a>
+  <div id="logowanieForm">
+  <ul>
+  <li><label id="username"></label></li>
+ <li> <img id="avatar"></img></li>
+  <li class="login" ><div class="g-signin2" data-onsuccess="onSignIn"></div></li>
+ <li id="logout" ><button id="signOut" onclick="signOut()" style="display:none;">Sign out</button></li>
+ </ul>
+</div>
 
+<label id="coords"></label>
+ 
+<div id="loginInfo">
+<label> Login to add photos to map!</label>
+</div> 
+<div id="photoAdder"></div>
 <form id="imgForm" runat="server" method="post" action="servlet" enctype="multipart/form-data" accept-charset="utf-8">
+      <label>Choose photo to add to map!</label>
         <input type='file' name="photo" id="uploadImg"/>
-          <img id="previewImg" src="#" alt="Upload image!" style="display:none;" />
-        <input type="submit" value="Save">
+	        <div id="loadedPhotoDiv" style="display:none;">
+		        <label>Choose place to addPhoto: </label>
+		          <input id="lon" type="text" name="lon" value="0">
+		            <input id="lat" type="text" name="lat" value="0">
+		          <img id="previewImg" src="#" alt="Upload image!" style="display:none;" />
+		        <input id="savePhotoButton" type="submit" value="Save" style="display:none;">
+	        </div>
         </form>
+</div>
         
 <!-- 	
 <c:forEach items="helen" var="photo">
     <img src="${pageContext.request.contextPath}/images/${photo}">
 </c:forEach>
  -->
-    <button id="addMarkerButton" onclick="AddPhotoToMap();" style="display:none;"> Add this photo to map!</button>
+   <!-- 
+   <button id="addMarkerButton" onclick="AddPhotoToMap();" style="display:none;"> Add this photo to map!</button>
+     --> 
     <div id="map"></div>
     <script>
     $("#uploadImg").change(function(){
@@ -44,6 +61,8 @@
     
     $(document).ready(function(){
     	LoadMap();
+    	
+
     });
 
     

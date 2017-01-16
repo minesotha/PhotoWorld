@@ -1,16 +1,34 @@
       #map {
-        height: 80%;
+        height: 90%;
       }
       /* Optional: Makes the sample page fill the window. */
       html, body {
         height: 100%;
         margin: 0;
         padding: 0;
-        overflow: hidden;
+       /* overflow: hidden; */
       }
       
-      img#avatar {
-    position: absolute;
+div#logowanieForm {
+    /* width: 500px; */
     right: 0px;
-    top: 0px;
+    top: 0;
+    /* height: 500px; */
+    background-color: lightgray;
+    position: absolute;
+    z-index: 10;
+    /* opacity: 0.8; */
+}
+
+img#previewImg {
+    width: 300px;
+}
+label#coords {
+    position: absolute;
+    bottom: 0;
+    /* vertical-align: middle; */
+}
+
+ul {
+    list-style-type: none;
 }

@@ -83,7 +83,12 @@ public class MainServlet extends HttpServlet {
 
 		// Set overall request size constraint
 		upload.setSizeMax(MAX_REQUEST_SIZE);
+		//zmienne do zapisu w bazie
 		String filePath = "";
+		String username = "";
+		Float lon=0.0f;
+		Float lat = 0.0f;
+		
 		try {
 			// Parse the request
 			List items = upload.parseRequest(new ServletRequestContext(request));
@@ -99,12 +104,23 @@ public class MainServlet extends HttpServlet {
 					// saves the file to upload directory
 					item.write(uploadedFile);
 				}
+				else {
+		            String name = item.getFieldName();
+		            String value = item.getString();
+		            if(name.equals("lon")){
+		            	lon = Float.parseFloat(value);
+		            }
+		            else if(name.equals("lat")){
+		               	lat = Float.parseFloat(value);
+		            }
+		            //you operations on paramters
+		        }
 			}
 
 			// naprawiæ
 			// String username =
 			// request.getParameter("google-signin-client_id");
-			String username = "helen";
+			//String username = "helen";
 
 			InputStream inputStream = null; // input stream of the upload file
 
@@ -129,7 +145,7 @@ public class MainServlet extends HttpServlet {
 				conn = DriverManager.getConnection(dbURL, dbUser, dbPass);
 
 				// constructs SQL statement
-				String sql = "INSERT INTO data (username, photo) values (?, ?)";
+				String sql = "INSERT INTO data (username, photo, longitude, latitude) values (?, ?, ?, ?)";
 				PreparedStatement statement = conn.prepareStatement(sql);
 				// dodanie nazwy uzytkownika
 				statement.setString(1, username);
@@ -140,6 +156,9 @@ public class MainServlet extends HttpServlet {
 					// column
 					statement.setString(2, filePath);
 				}
+				
+				statement.setFloat(3, lon);
+				statement.setFloat(4, lat);
 
 				// sends the statement to the database server
 				int row = statement.executeUpdate();
@@ -159,7 +178,7 @@ public class MainServlet extends HttpServlet {
 					}
 				}
 				// sets the message in request scope
-				request.setAttribute("Message", message);
+				//request.setAttribute("Message", message);
 
 				// forwards to the message page
 				getServletContext().getRequestDispatcher("/").forward(request, response);

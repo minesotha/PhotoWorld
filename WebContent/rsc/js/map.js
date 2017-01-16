@@ -22,7 +22,8 @@ function initMap() {
         });
 
         map.addListener( 'dblclick', function (event) {
-        		addMarker(event.latLng); 
+//        		addMarker(event.latLng); 
+        	getLocation(event.latLng); 
         });
         
      
@@ -30,14 +31,25 @@ function initMap() {
 
 function onSignIn(googleUser) {
 	  var profile = googleUser.getBasicProfile();
+	  $("#username").text(profile.getName());
+	  $(".g-signin2").hide();
+	  $("#signOut").show();
 	  console.log('ID: ' + profile.getId()); // Do not send to your backend! Use an ID token instead.
 	  console.log('Name: ' + profile.getName());
 	  console.log('Image URL: ' + profile.getImageUrl());
 	  console.log('Email: ' + profile.getEmail());
 	  $("#avatar").attr("src", profile.getImageUrl());
+  	$("#loginInfo").hide();
+	$("#imgForm").show();
 }
 
 function signOut() {
+	$("#loginInfo").show();
+	$("#imgForm").hide();
+	  $("#username").text("");
+	  $("#avatar").attr("src", "");
+	  $(".g-signin2").show();
+	  $("#signOut").hide();
     var auth2 = gapi.auth2.getAuthInstance();
     auth2.signOut().then(function () {
       console.log('User signed out.');
@@ -56,7 +68,6 @@ var canAddMarker=false;
 
 function AddPhotoToMap(){
 	canAddMarker=true;
-	
 }
 //wyłącz niepotrzebne już rzeczy po dodaniu markera
 function finalizeAddingPhoto(){
@@ -86,5 +97,21 @@ function addMarker(pnt){
 	      });
 	}
 	finalizeAddingPhoto();	
+}
+
+var lastMarker;
+
+function getLocation(pnt){
+	if(lastMarker!=null){		
+		lastMarker.setMap(null);
+	}
+	   var marker = new google.maps.Marker({
+		      position: pnt,
+		      map: map
+		      });
+	   $("#lon").val(pnt.lng().toFixed(2));
+	   $("#lat").val(pnt.lat().toFixed(2));
+	   lastMarker = marker;
+
 }
 
