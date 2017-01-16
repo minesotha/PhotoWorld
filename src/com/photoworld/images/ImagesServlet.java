@@ -37,7 +37,7 @@ public class ImagesServlet extends HttpServlet {
     public java.util.List<Photo> photoArray;
 	@Override
     protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
-        String username =  request.getParameter("name");
+       String username =  request.getParameter("name");
      
         
         photoArray=new ArrayList<Photo>();
@@ -50,21 +50,24 @@ public class ImagesServlet extends HttpServlet {
 
 
 PreparedStatement statement = (PreparedStatement) connection.prepareStatement(SQL_FIND);
-            statement.setString(1, username);
+          statement.setString(1, username);
+			statement.setString(1, "Psothny Soth");
+
 
             try (ResultSet resultSet = statement.executeQuery()) {
             	if(resultSet.wasNull()){                	
             		response.sendError(HttpServletResponse.SC_NOT_FOUND); // 404.
             	}
             	else{
-            		int count=0;
             		while (resultSet.next()) {
             			Photo photo=new Photo();
-            			photo.setPath(resultSet.getString("photo"));
+            			//preparing path
+            			String path = resultSet.getString("photo");
+            			String preparedPath = path.substring(path.indexOf("PhotoWorld"));
+            			photo.setPath(preparedPath.substring(preparedPath.indexOf("data")));
             			photo.setLongitude(resultSet.getFloat("longitude"));
 	                     photo.setLatitude(resultSet.getFloat("latitude"));
 	                     photoArray.add(photo);
-	                    count++;
 	                }
             		
             		  String json = new Gson().toJson(photoArray);

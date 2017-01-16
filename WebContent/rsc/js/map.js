@@ -1,9 +1,6 @@
-//upload plików
+//globals
 
-
-
-
-
+ var profile;
 
 //mapa
 var map; 
@@ -30,9 +27,10 @@ function initMap() {
 }
 
 function onSignIn(googleUser) {
-	  var profile = googleUser.getBasicProfile();
+	  profile = googleUser.getBasicProfile();
 	  $("#username").text(profile.getName());
 	  $("#usernameForm").val(profile.getName());
+	  LoadMap(profile.getName());
 	  $(".g-signin2").hide();
 	  $("#signOut").show();
 	  console.log('ID: ' + profile.getId()); // Do not send to your backend! Use an ID token instead.
@@ -57,6 +55,30 @@ function signOut() {
     });
   }
 
+function LoadMap(name){
+	
+	  $.ajax({
+        url:'images',
+        data:{name:name},
+        type:'get',
+        cache:false,
+        success:function(photos){
+        	$.each( photos, function( key, data) {
+           console.log(data);
+           var point={};
+           point.lat = parseFloat(data.latitude);
+           point.lng = parseFloat(data.longitude);
+           addMarker(point, data.path)
+        	});
+        },
+        error:function(){
+          alert('error');
+        }
+     }
+	  );
+
+}
+
 function displayCoordinates(pnt) {
 var lat = pnt.lat();
 lat = lat.toFixed(4);
@@ -79,25 +101,23 @@ function finalizeAddingPhoto(){
     canAddMarker=false;
 }
 
-function addMarker(pnt){  
-	if(canAddMarker==true){
-		var photoLink = $("#previewImg").attr("src");
-	
+function addMarker(pnt, src){  
+	//	var photoLink = $("#previewImg").attr("src");
+	var photoLink = src;
 	    var marker = new google.maps.Marker({
 	      position: pnt,
 	      map: map
 	      });
 	    var    infowindow = new google.maps.InfoWindow();
-	    infowindow.setContent('<IMG BORDER="0" ALIGN="Left" SRC="'+photoLink+'">'+"<BR>LAT: "+pnt.lat().toFixed(2) + "\t LON: "+pnt.lng().toFixed(2));
+	    infowindow.setContent('<IMG BORDER="0" ALIGN="Left" SRC="'+photoLink+'">'+"<BR>LAT: "+pnt.lat.toFixed(2) + "\t LON: "+pnt.lng.toFixed(2));
 	    marker.info =   infowindow;
-	 	marker.info.open(map, marker);
+	 //	marker.info.open(map, marker);
 
 	    marker.addListener('click', function() {
 	    	//testowo ustawianie kontentu na długość i szerokość, w przyszłości obrazek
 	    	marker.info.open(map, marker);
 	      });
-	}
-	finalizeAddingPhoto();	
+	//finalizeAddingPhoto();	
 }
 
 var lastMarker;
