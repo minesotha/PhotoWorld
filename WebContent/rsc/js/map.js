@@ -53,6 +53,7 @@ function signOut() {
     auth2.signOut().then(function () {
       console.log('User signed out.');
     });
+    deleteMarkers();
   }
 
 function LoadMap(name){
@@ -84,8 +85,25 @@ var lat = pnt.lat();
 lat = lat.toFixed(4);
 var lng = pnt.lng();
 lng = lng.toFixed(4);
-$("#coords").text("Latitude: " + lat + "  Longitude: " + lng);
+$("#coords").text("Latitude: " + lat + "\nLongitude: " + lng);
 }
+//Sets the map on all markers in the array.
+function setMapOnAll(map) {
+  for (var i = 0; i < markers.length; i++) {
+    markers[i].setMap(map);
+  }
+}
+
+//Deletes all markers in the array by removing references to them.
+function deleteMarkers() {
+  clearMarkers();
+  markers = [];
+}
+//Removes the markers from the map, but keeps them in the array.
+function clearMarkers() {
+  setMapOnAll(null);
+}
+
 
 var canAddMarker=false;
 
@@ -100,6 +118,7 @@ function finalizeAddingPhoto(){
     $('#previewImg').hide();
     canAddMarker=false;
 }
+var markers=[];
 
 function addMarker(pnt, src){  
 	//	var photoLink = $("#previewImg").attr("src");
@@ -113,6 +132,7 @@ function addMarker(pnt, src){
 	    marker.info =   infowindow;
 	 //	marker.info.open(map, marker);
 
+	    markers.push(marker);
 	    marker.addListener('click', function() {
 	    	//testowo ustawianie kontentu na długość i szerokość, w przyszłości obrazek
 	    	marker.info.open(map, marker);

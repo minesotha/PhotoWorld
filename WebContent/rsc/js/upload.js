@@ -7,6 +7,8 @@ function readURL(input) {
             $('#previewImg').show();
             $('#savePhotoButton').show();
             $('#loadedPhotoDiv').show();
+            $('#addPhotoLabel').hide();
+            $("#photoAdder").removeClass("adderSlider");
             AddPhotoToMap();
         }        
         reader.readAsDataURL(input.files[0]);
