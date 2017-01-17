@@ -181,7 +181,6 @@ public class MainServlet extends HttpServlet {
 				}
 				// sets the message in request scope
 				//request.setAttribute("Message", message);
-
 				// forwards to the message page
 				getServletContext().getRequestDispatcher("/").forward(request, response);
 			}

@@ -20,6 +20,14 @@
     <servlet-name>images</servlet-name>
     <url-pattern>/images</url-pattern>
   </servlet-mapping>
+    <servlet>
+    <servlet-name>delete</servlet-name>
+    <servlet-class>com.photoworld.images.DeletePhotoServlet</servlet-class>
+  </servlet>
+  <servlet-mapping>
+    <servlet-name>delete</servlet-name>
+    <url-pattern>/delete</url-pattern>
+  </servlet-mapping>
   <resource-ref>
     <description>Primary database</description>
     <res-ref-name>jdbc:mysql://localhost/photoworld</res-ref-name>

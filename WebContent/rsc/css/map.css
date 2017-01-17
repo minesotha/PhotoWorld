@@ -38,7 +38,7 @@ div#logowanieForm {
 }
 
 img#previewImg {
-    width:80%;
+      height: 210px;
 }
 
 
@@ -112,12 +112,13 @@ button#signOut {
 
 div#loginInfo {
     text-align: center;
-    color: red;
-    position: relative;
+    position: absolute;
     z-index: 126;
-    /* top: 20%; */
     font-size: 29px;
-    /* background: #f2eccf; */
+    width: 100%;
+}
+div#loginInfo>label {
+	text-align: center;
 }
 
 .login {

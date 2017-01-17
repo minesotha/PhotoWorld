@@ -25,7 +25,7 @@ public class ImagesServlet extends HttpServlet {
 	private String dbURL = "jdbc:mysql://localhost/photoworld";
 	private String dbUser = "root";
 	private String dbPass = "roland";
-	private static final String SQL_FIND = "SELECT photo, longitude, latitude FROM data WHERE username = ?";
+	private static final String SQL_FIND = "SELECT id, photo, longitude, latitude FROM data WHERE username = ?";
 
 	@Resource(name = "jdbc:mysql://localhost/photoworld") // For Tomcat, define
 															// as <Resource> in
@@ -51,7 +51,6 @@ public class ImagesServlet extends HttpServlet {
 
 PreparedStatement statement = (PreparedStatement) connection.prepareStatement(SQL_FIND);
           statement.setString(1, username);
-			statement.setString(1, "Psothny Soth");
 
 
             try (ResultSet resultSet = statement.executeQuery()) {
@@ -64,6 +63,7 @@ PreparedStatement statement = (PreparedStatement) connection.prepareStatement(SQ
             			//preparing path
             			String path = resultSet.getString("photo");
             			String preparedPath = path.substring(path.indexOf("PhotoWorld"));
+            			photo.setId(resultSet.getInt("id"));
             			photo.setPath(preparedPath.substring(preparedPath.indexOf("data")));
             			photo.setLongitude(resultSet.getFloat("longitude"));
 	                     photo.setLatitude(resultSet.getFloat("latitude"));
